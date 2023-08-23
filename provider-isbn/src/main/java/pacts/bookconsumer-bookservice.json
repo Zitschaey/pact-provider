@@ -1,0 +1,89 @@
+{
+  "consumer": {
+    "name": "bookconsumer"
+  },
+  "interactions": [
+    {
+      "description": "a request to get book by id",
+      "providerStates": [
+        {
+          "name": "book with id 1 exists"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/books/1"
+      },
+      "response": {
+        "body": {
+          "author": "author 1",
+          "id": 1,
+          "isbn": "9780590353427",
+          "title": "title 1"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$.author": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.isbn": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.title": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-jvm": {
+      "version": "4.6.2"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "bookservice"
+  }
+}
